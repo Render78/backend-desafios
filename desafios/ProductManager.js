@@ -16,7 +16,7 @@ class ProductManager {
         }
 
         const product = {
-            id: this.product.length++,
+            id: this.product.length + 1,
             title,
             description,
             price,
@@ -33,7 +33,7 @@ class ProductManager {
     }
 
     getProductById(id) {
-        const productFound = this.products.find(p => p.code === id);
+        const productFound = this.products.find(p => p.id === id);
         if (productFound != null) {
             return productFound;
         } else {
