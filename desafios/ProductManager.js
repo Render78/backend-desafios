@@ -11,7 +11,7 @@ class ProductManager {
         }
 
         // Verificar que el campo code no se repita
-        const validateProduct = this.products.find(product => product.code === code);
+        const validateProduct = this.products.find(p => p.code === code);
         if (validateProduct) {
             throw new Error('El código del producto ya existe');
         }
@@ -27,6 +27,17 @@ class ProductManager {
         this.products.push(product);
         return product;
     }
-    
 
+    getProducts() {
+        return this.products;
+    }
+
+    getProductById(id) {
+        const productFound = this.products.find(p => p.code === id);
+        if (productFound != null) {
+            return productFound;
+        } else {
+            throw new Error("Not found");
+        }
+    }
 }
