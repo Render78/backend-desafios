@@ -16,7 +16,7 @@ class ProductManager {
         }
 
         const product = {
-            id: this.product.length + 1,
+            id: this.products.length + 1,
             title,
             description,
             price,
