@@ -37,7 +37,7 @@ class ProductManager {
         if (productFound != null) {
             return productFound;
         } else {
-            throw new Error("Not found");
+            throw new Error("Producto no encontrado");
         }
     }
 }
