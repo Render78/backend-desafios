@@ -37,7 +37,16 @@ class ProductManager {
         if (productFound != null) {
             return productFound;
         } else {
-            throw new Error("Producto no encontrado");
+            throw new Error("No se encontró un producto por ese ID");
+        }
+    }
+
+    deleteProduct(code) {
+        const index = this.products.findIndex(p => p.code === code);
+        if (index !== -1) {
+            this.products.splice(index, 1);
+        } else {
+            throw new Error("No se pudo borrar el producto, ese codigo de producto no existe");
         }
     }
 }
