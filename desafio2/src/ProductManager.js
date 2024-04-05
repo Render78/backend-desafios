@@ -38,14 +38,14 @@ class ProductManager {
     }
 
     getProducts() {
-        try {            
+        try {
             const data = fs.readFileSync(this.path, 'utf8');
-            
+
             const products = JSON.parse(data);
-            
+
             return products;
         } catch (error) {
-            
+
             console.error('Error al leer el archivo de productos: ', error.message);
             return [];
         }
@@ -53,20 +53,20 @@ class ProductManager {
 
     getProductById(id) {
         try {
-            
+
             const data = fs.readFileSync(this.path, 'utf8');
-            
+
             const products = JSON.parse(data);
-            
+
             const productFound = products.find(p => p.id === id);
-            
+
             if (productFound != null) {
                 return productFound;
             } else {
                 throw new Error("No se encontró un producto con ese ID");
             }
         } catch (error) {
-            
+
             throw new Error('Error al buscar el producto:', error.message);
         }
     }
@@ -74,31 +74,44 @@ class ProductManager {
     updateProduct(id, fieldToUpdate, updatedValue) {
         try {
             const data = fs.readFileSync(this.path, 'utf8');
-    
+
             let products = JSON.parse(data);
-    
+
             const index = products.findIndex(p => p.id === id);
-    
+
             if (index === -1) {
                 throw new Error("No se encontró un producto con ese ID");
             }
-    
+
             products[index][fieldToUpdate] = updatedValue;
-    
+
             fs.writeFileSync(this.path, JSON.stringify(products), 'utf8');
-    
+
             return products[index];
         } catch (error) {
             throw new Error('Error al actualizar el producto:', error.message);
         }
     }
 
-    deleteProduct(code) {
-        const index = this.products.findIndex(p => p.code === code);
-        if (index !== -1) {
-            this.products.splice(index, 1);
-        } else {
-            throw new Error("No se pudo borrar el producto, ese codigo de producto no existe");
+    deleteProduct(id) {
+        try {
+            const data = fs.readFileSync(this.path, 'utf8');
+
+            let products = JSON.parse(data);
+
+            const index = products.findIndex(p => p.id === id);
+
+            if (index === -1) {
+                throw new Error("No se encontró un producto con ese ID");
+            }
+
+            products.splice(index, 1);
+
+            fs.writeFileSync(this.path, JSON.stringify(products), 'utf8');
+
+            return true;
+        } catch (error) {
+            throw new Error('Error al eliminar el producto:', error.message);
         }
     }
 }
