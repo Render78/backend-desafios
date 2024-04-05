@@ -71,6 +71,28 @@ class ProductManager {
         }
     }
 
+    updateProduct(id, fieldToUpdate, updatedValue) {
+        try {
+            const data = fs.readFileSync(this.path, 'utf8');
+    
+            let products = JSON.parse(data);
+    
+            const index = products.findIndex(p => p.id === id);
+    
+            if (index === -1) {
+                throw new Error("No se encontró un producto con ese ID");
+            }
+    
+            products[index][fieldToUpdate] = updatedValue;
+    
+            fs.writeFileSync(this.path, JSON.stringify(products), 'utf8');
+    
+            return products[index];
+        } catch (error) {
+            throw new Error('Error al actualizar el producto:', error.message);
+        }
+    }
+
     deleteProduct(code) {
         const index = this.products.findIndex(p => p.code === code);
         if (index !== -1) {
