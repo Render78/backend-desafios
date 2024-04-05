@@ -2,7 +2,7 @@ const fs = require('fs');
 
 class ProductManager {
 
-    constructor(filePath = "Products.json") {
+    constructor(filePath) {
         this.products = [];
         this.path = filePath;
     }
