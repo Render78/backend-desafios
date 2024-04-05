@@ -20,7 +20,7 @@ class ProductManager {
         }
 
         const product = {
-            id: this.products.length + 1, // Asigna un ID autoincrementable
+            id: this.products.length + 1,
             title,
             description,
             price,
@@ -31,7 +31,7 @@ class ProductManager {
 
         this.products.push(product);
 
-        // Guarda el array actualizado en el archivo usando FileSystem (FS)
+        
         fs.writeFileSync(this.path, JSON.stringify(this.products), 'utf8');
 
         return product;
