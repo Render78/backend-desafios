@@ -38,13 +38,10 @@ class ProductManager {
     }
 
     getProducts() {
-        try {
-            
+        try {            
             const data = fs.readFileSync(this.path, 'utf8');
-
             
             const products = JSON.parse(data);
-
             
             return products;
         } catch (error) {
@@ -55,11 +52,22 @@ class ProductManager {
     }
 
     getProductById(id) {
-        const productFound = this.products.find(p => p.id === id);
-        if (productFound != null) {
-            return productFound;
-        } else {
-            throw new Error("No se encontró un producto por ese ID");
+        try {
+            
+            const data = fs.readFileSync(this.path, 'utf8');
+            
+            const products = JSON.parse(data);
+            
+            const productFound = products.find(p => p.id === id);
+            
+            if (productFound != null) {
+                return productFound;
+            } else {
+                throw new Error("No se encontró un producto con ese ID");
+            }
+        } catch (error) {
+            
+            throw new Error('Error al buscar el producto:', error.message);
         }
     }
 
