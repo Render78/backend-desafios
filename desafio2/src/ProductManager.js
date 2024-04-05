@@ -28,6 +28,9 @@ class ProductManager {
             stock
         };
         this.products.push(product);
+
+        fs.writeFileSync(this.path, JSON.stringify(this.products), 'utf8');
+
         return product;
     }
 
