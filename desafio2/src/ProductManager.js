@@ -1,7 +1,8 @@
 class ProductManager {
 
-    constructor() {
+    constructor(filePath) {
         this.products = [];
+        this.path = filePath;
     }
 
     addProduct(title, description, price, thumbnail, code, stock) {
