@@ -2,7 +2,7 @@ const fs = require('fs');
 
 class ProductManager {
 
-    constructor(filePath) {
+    constructor(filePath = "Products.json") {
         this.products = [];
         this.path = filePath;
     }
@@ -31,14 +31,27 @@ class ProductManager {
 
         this.products.push(product);
 
-        
+
         fs.writeFileSync(this.path, JSON.stringify(this.products), 'utf8');
 
         return product;
     }
 
     getProducts() {
-        return this.products;
+        try {
+            
+            const data = fs.readFileSync(this.path, 'utf8');
+
+            
+            const products = JSON.parse(data);
+
+            
+            return products;
+        } catch (error) {
+            
+            console.error('Error al leer el archivo de productos: ', error.message);
+            return [];
+        }
     }
 
     getProductById(id) {
