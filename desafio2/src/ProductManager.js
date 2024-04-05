@@ -7,7 +7,8 @@ class ProductManager {
         this.path = filePath;
     }
 
-    addProduct(title, description, price, thumbnail, code, stock) {
+    addProduct(productData) {
+        const { title, description, price, thumbnail, code, stock } = productData;
 
         if (!title || !description || !price || !thumbnail || !code || !stock) {
             throw new Error('Todos los campos son obligatorios');
@@ -19,7 +20,7 @@ class ProductManager {
         }
 
         const product = {
-            id: this.products.length + 1,
+            id: this.products.length + 1, // Asigna un ID autoincrementable
             title,
             description,
             price,
@@ -27,8 +28,10 @@ class ProductManager {
             code,
             stock
         };
+
         this.products.push(product);
 
+        // Guarda el array actualizado en el archivo usando FileSystem (FS)
         fs.writeFileSync(this.path, JSON.stringify(this.products), 'utf8');
 
         return product;
