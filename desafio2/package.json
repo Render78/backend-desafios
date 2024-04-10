@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --watch desafio2/src/ProductManager.js"
+    "start": "node --watch src/ProductManager.js"
   },
   "keywords": [],
   "author": "",
