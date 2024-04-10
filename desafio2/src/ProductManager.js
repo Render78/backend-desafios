@@ -115,7 +115,7 @@ class ProductManager {
 
 //TESTING
 async function test() {
-    const manager = new ProductManager('./desafio2/src/Products.json');
+    const manager = new ProductManager('./src/Products.json');
 
 
     const allProducts = await manager.getProducts();
