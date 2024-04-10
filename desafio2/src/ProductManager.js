@@ -88,8 +88,9 @@ class ProductManager {
 
             const index = data.findIndex(p => p.id === id);
 
-            if (index === -1) {
-                data.splice(index, 1, productUpdate);
+            if (index !== -1) {
+                const updatedProduct = { ...data[index], ...productUpdate };
+                data.splice(index, 1, updatedProduct);
                 await this.saveProduct(data);
             } else {
                 console.error("No se encontro el producto a actualizar");
@@ -146,6 +147,22 @@ async function test() {
 
     const productById = await manager.getProductById(2);
     console.log("Producto encontrado por id:", productById);
+
+    // Llamar a updateProduct para modificar un producto
+    const productToUpdate = productsAfterAdd[0]; // Tomar el primer producto para actualizar
+    const updateData = {
+        title: 'Titulo actualizado',
+        price: 500,
+        stock: 50
+        // Puedes agregar más campos si lo deseas
+    };
+    await manager.updateProduct(productToUpdate.id, updateData);
+
+    // Obtener el producto actualizado
+    const updatedProduct = await manager.getProductById(productToUpdate.id);
+    console.log("Producto actualizado:", updatedProduct);
+
+    // Si deseas, puedes agregar más pruebas aquí para verificar que la actualización fue exitosa
 }
 
 test();
