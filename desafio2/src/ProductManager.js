@@ -104,9 +104,9 @@ class ProductManager {
         try {
             const productsArray = await this.readFile();
 
-            const idFound = productsArray.filter(item => item.id != id);
+            const productsBeforeDeleted = productsArray.filter(item => item.id != id);
 
-            await this.saveProduct(idFound);
+            await this.saveProduct(productsBeforeDeleted);
         } catch (error) {
             console.error("No se pudo borrar el producto: ", error)
         }
@@ -116,12 +116,12 @@ class ProductManager {
 //TESTING
 async function test() {
     const manager = new ProductManager('./desafio2/src/Products.json');
-    
-    
-    const productsBeforeAdd = await manager.getProducts();
-    console.log("Productos antes de agregar:", productsBeforeAdd);
-    
-    
+
+
+    const allProducts = await manager.getProducts();
+    console.log("Productos antes de agregar:", allProducts); //Before add products, it returns an empty array[]
+
+    //PRODUCTS FOR TESTING
     const product1 = {
         title: 'Producto Prueba1',
         description: 'Este es un Producto de Prueba1',
@@ -141,28 +141,38 @@ async function test() {
         stock: 35
     };
     await manager.addProduct(product2);
-    
-    const productsAfterAdd = await manager.getProducts();
-    console.log("Productos después de agregar:", productsAfterAdd);
 
+    //GET ALL PRODUCTS
+
+    console.log("Productos después de agregar:", allProducts);
+
+    //GET PRODUCT BY ID
     const productById = await manager.getProductById(2);
     console.log("Producto encontrado por id:", productById);
 
-    // Llamar a updateProduct para modificar un producto
-    const productToUpdate = productsAfterAdd[0]; // Tomar el primer producto para actualizar
+    //UPDATE
+    const productToUpdate = allProducts[0];
     const updateData = {
         title: 'Titulo actualizado',
         price: 500,
         stock: 50
-        // Puedes agregar más campos si lo deseas
     };
     await manager.updateProduct(productToUpdate.id, updateData);
 
-    // Obtener el producto actualizado
     const updatedProduct = await manager.getProductById(productToUpdate.id);
     console.log("Producto actualizado:", updatedProduct);
 
-    // Si deseas, puedes agregar más pruebas aquí para verificar que la actualización fue exitosa
+    //DELETE
+    await manager.deleteProduct(1);
+    console.log("Productos luego de borrar: ", allProducts);
+
+    const deletedProduct = allProducts.find(product => product.id === 1);
+    if (!deletedProduct) {
+        console.log("El producto fue eliminado correctamente.");
+    } else {
+        console.error("Error: El producto no fue eliminado correctamente.");
+    }
+
 }
 
 test();
