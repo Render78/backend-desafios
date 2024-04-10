@@ -116,11 +116,11 @@ class ProductManager {
 async function test() {
     const manager = new ProductManager('./desafio2/src/Products.json');
     
-    // Leer productos antes de agregar
+    
     const productsBeforeAdd = await manager.getProducts();
     console.log("Productos antes de agregar:", productsBeforeAdd);
     
-    // Agregar productos
+    
     const product1 = {
         title: 'Producto Prueba1',
         description: 'Este es un Producto de Prueba1',
@@ -141,12 +141,11 @@ async function test() {
     };
     await manager.addProduct(product2);
     
-    // Leer productos después de agregar
     const productsAfterAdd = await manager.getProducts();
     console.log("Productos después de agregar:", productsAfterAdd);
 
-    const productById = await manager.getProductById(1);
-    console.log("Producto por id:", productById);
+    const productById = await manager.getProductById(2);
+    console.log("Producto encontrado por id:", productById);
 }
 
 test();
