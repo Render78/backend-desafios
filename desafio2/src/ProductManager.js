@@ -83,25 +83,20 @@ class ProductManager {
         }
     }
 
-    updateProduct(id, fieldToUpdate, updatedValue) {
+    async updateProduct(id, productUpdate) {
         try {
-            const data = fs.readFileSync(this.path, 'utf8');
+            const data = await this.readFile();
 
-            let products = JSON.parse(data);
-
-            const index = products.findIndex(p => p.id === id);
+            const index = data.findIndex(p => p.id === id);
 
             if (index === -1) {
-                throw new Error("No se encontró un producto con ese ID");
+                data.splice(index, 1, productUpdate);
+                await this.saveProduct(data);
+            } else {
+                console.error("No se encontro el producto a actualizar");
             }
-
-            products[index][fieldToUpdate] = updatedValue;
-
-            fs.writeFileSync(this.path, JSON.stringify(products), 'utf8');
-
-            return products[index];
         } catch (error) {
-            throw new Error('Error al actualizar el producto:', error.message);
+            console.error("No se pudo actualizar el producto: ", error)
         }
     }
 
