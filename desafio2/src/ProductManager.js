@@ -54,15 +54,14 @@ class ProductManager {
         return product;
     }
 
-    getProducts() {
+    async getProducts() {
         try {
-            const data = fs.readFileSync(this.path, 'utf8');
+            const data = await fs.readFile(this.path, 'utf8');
 
             const products = JSON.parse(data);
 
             return products;
         } catch (error) {
-
             console.error('Error al leer el archivo de productos: ', error.message);
             return [];
         }
@@ -96,7 +95,7 @@ class ProductManager {
                 console.error("No se encontro el producto a actualizar");
             }
         } catch (error) {
-            console.error("No se pudo actualizar el producto: ", error)
+            console.error("No se pudo actualizar el producto: ", error);
         }
     }
 
@@ -113,4 +112,38 @@ class ProductManager {
     }
 }
 
-module.exports = ProductManager;
+//TESTING
+async function test() {
+    const manager = new ProductManager('./desafio2/src/Products.json');
+    
+    // Leer productos antes de agregar
+    const productsBeforeAdd = await manager.getProducts();
+    console.log("Productos antes de agregar:", productsBeforeAdd);
+    
+    // Agregar productos
+    const product1 = {
+        title: 'Producto Prueba1',
+        description: 'Este es un Producto de Prueba1',
+        price: 200,
+        thumbnail: 'Sin Imagen',
+        code: 'abc123',
+        stock: 25
+    };
+    await manager.addProduct(product1);
+
+    const product2 = {
+        title: 'Producto Prueba2',
+        description: 'Este es un Producto de Prueba2',
+        price: 300,
+        thumbnail: 'Sin Imagen',
+        code: 'abc124',
+        stock: 35
+    };
+    await manager.addProduct(product2);
+    
+    // Leer productos después de agregar
+    const productsAfterAdd = await manager.getProducts();
+    console.log("Productos después de agregar:", productsAfterAdd);
+}
+
+test();
