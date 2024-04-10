@@ -15,6 +15,16 @@ class ProductManager {
         }
     }
 
+    async readFile() {
+        try {
+            const read = await fs.readFile(this.path, 'utf-8')
+            const productsArray = JSON.parse(read)
+            return productsArray
+        } catch (error) {
+            console.log('Error al leer el archivo: ', error)
+        }
+    }
+
     async addProduct(newProduct) {
         const { title, description, price, thumbnail, code, stock } = newProduct;
 
@@ -58,23 +68,18 @@ class ProductManager {
         }
     }
 
-    getProductById(id) {
+    async getProductById(id) {
         try {
-
-            const data = fs.readFileSync(this.path, 'utf8');
-
-            const products = JSON.parse(data);
-
-            const productFound = products.find(p => p.id === id);
-
-            if (productFound != null) {
-                return productFound;
-            } else {
-                throw new Error("No se encontró un producto con ese ID");
+            const productsArray = await this.readFile()
+            const idFound = productsArray.find(prod => prod.id === id)
+            if (!idFound) {
+                console.error('No se encontro el producto con el id especificado');
+                return;
             }
-        } catch (error) {
 
-            throw new Error('Error al buscar el producto:', error.message);
+            return idFound;
+        } catch (error) {
+            console.error('Error en lectura de archivo: ', error);
         }
     }
 
