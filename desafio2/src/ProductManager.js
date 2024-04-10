@@ -100,25 +100,15 @@ class ProductManager {
         }
     }
 
-    deleteProduct(id) {
+    async deleteProduct(id) {
         try {
-            const data = fs.readFileSync(this.path, 'utf8');
+            const productsArray = await this.readFile();
 
-            let products = JSON.parse(data);
+            const idFound = productsArray.filter(item => item.id != id);
 
-            const index = products.findIndex(p => p.id === id);
-
-            if (index === -1) {
-                throw new Error("No se encontró un producto con ese ID");
-            }
-
-            products.splice(index, 1);
-
-            fs.writeFileSync(this.path, JSON.stringify(products), 'utf8');
-
-            return true;
+            await this.saveProduct(idFound);
         } catch (error) {
-            throw new Error('Error al eliminar el producto:', error.message);
+            console.error("No se pudo borrar el producto: ", error)
         }
     }
 }
