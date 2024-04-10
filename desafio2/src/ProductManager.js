@@ -144,6 +144,9 @@ async function test() {
     // Leer productos después de agregar
     const productsAfterAdd = await manager.getProducts();
     console.log("Productos después de agregar:", productsAfterAdd);
+
+    const productById = await manager.getProductById(1);
+    console.log("Producto por id:", productById);
 }
 
 test();
