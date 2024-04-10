@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 
 class ProductManager {
 
@@ -7,16 +7,24 @@ class ProductManager {
         this.path = filePath;
     }
 
-    addProduct(productData) {
-        const { title, description, price, thumbnail, code, stock } = productData;
+    async saveProduct(arrayProducts) {
+        try {
+            await fs.writeFile(this.path, JSON.stringify(arrayProducts, null, 2))
+        } catch (error) {
+            console.log('Error al guardar el archivo: ', error)
+        }
+    }
+
+    async addProduct(newProduct) {
+        const { title, description, price, thumbnail, code, stock } = newProduct;
 
         if (!title || !description || !price || !thumbnail || !code || !stock) {
-            throw new Error('Todos los campos son obligatorios');
+            console.log('Complete todos los campos.');
         }
 
         const validateProduct = this.products.find(p => p.code === code);
         if (validateProduct) {
-            throw new Error('El código del producto ya existe');
+            console.log('El código del producto ya existe, no se puede repetir el mismo.');
         }
 
         const product = {
@@ -31,8 +39,7 @@ class ProductManager {
 
         this.products.push(product);
 
-
-        fs.writeFileSync(this.path, JSON.stringify(this.products), 'utf8');
+        await this.saveProduct(this.products);
 
         return product;
     }
