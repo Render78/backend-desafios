@@ -36,3 +36,7 @@ server.get('/products/:pid', async(req, res) =>{
         return res.send('Error al traer el producto por su id')
     }
 })
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+})
