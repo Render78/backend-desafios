@@ -17,22 +17,22 @@ server.get('/products', async(req, res)=>{
             return res.send(productsArray)
         }
     } catch (error) {
-        console.log(error)
-        return res.send('Error al procesar el pedido')
+        console.error(error);
+        return res.send('No se pudieron obtener los productos')
     }
 })
 
-server.get('/products/:id', async(req, res) =>{
+server.get('/products/:pid', async(req, res) =>{
     try {
-        let id = parseInt(req.params.id)
-        const sought = await manager.getProductById(id)
-        if(id){
+        let parameterId = parseInt(req.params.pid)
+        const sought = await manager.getProductById(parameterId)
+        if(parameterId){
             return res.send(sought);
         }else{
-            console.log('Producto no encontrado');
+            console.log('No se encontro el producto con el id especificado');
         }
     } catch (error) {
         console.log(error)
-        return res.send('Error al procesar el pedido de buscar x ID')
+        return res.send('Error al traer el producto por su id')
     }
 })
