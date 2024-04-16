@@ -1,6 +1,6 @@
 const ProductManager = require('./ProductManager.js');
 const express = require('express');
-const manager = new ProductManager('./src/Products.json');
+const manager = new ProductManager('./Products.json');
 
 const server = express();
 const PORT = 8080;
