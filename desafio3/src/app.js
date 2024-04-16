@@ -7,7 +7,7 @@ const PORT = 8080;
 server.use(express.urlencoded({ extended: true }));
 
 server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+    console.log(`El servidor está corriendo en el puerto ${PORT}`)
 })
 
 server.get('/products', async(req, res)=>{
