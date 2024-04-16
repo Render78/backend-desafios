@@ -1,10 +1,14 @@
 const ProductManager = require('./ProductManager.js');
 const express = require('express');
-const manager = new ProductManager('./Products.json');
+const manager = new ProductManager('./src/Products.json');
 
 const server = express();
 const PORT = 8080;
 server.use(express.urlencoded({ extended: true }));
+
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+})
 
 server.get('/products', async(req, res)=>{
     try {
@@ -35,8 +39,4 @@ server.get('/products/:pid', async(req, res) =>{
         console.log(error)
         return res.send('Error al traer el producto por su id')
     }
-})
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
 })
