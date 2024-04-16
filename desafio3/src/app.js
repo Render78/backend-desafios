@@ -36,7 +36,7 @@ server.get('/products/:pid', async(req, res) =>{
             console.log('No se encontro el producto con el id especificado');
         }
     } catch (error) {
-        console.log(error)
+        console.error(error)
         return res.send('Error al traer el producto por su id')
     }
 })
