@@ -2,8 +2,6 @@ const fs = require('fs').promises;
 
 class ProductManager {
 
-    static lastId = 0;
-
     constructor(filePath) {
         this.products = [];
         this.path = filePath;
