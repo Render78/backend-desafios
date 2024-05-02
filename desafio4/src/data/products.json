@@ -1,0 +1,46 @@
+[
+  {
+    "id": "_ltpU1trd2g",
+    "title": "Laptop ultradelgada HP Pavilion x360",
+    "description": "Laptop convertible con pantalla táctil de 13.3 pulgadas, procesador Intel Core i5, 8GB de RAM y 256GB de almacenamiento SSD.",
+    "code": "HpltpU1trd2g",
+    "price": "1200",
+    "stock": 15,
+    "status": true,
+    "category": "Laptops",
+    "thumbnail": "https://ejemplo.com/laptop-ultradelgada.jpg"
+  },
+  {
+    "id": "_aurcInlmbrs1",
+    "title": "Auriculares inalámbricos deportivos SoundSport de Bose",
+    "description": "Auriculares Bluetooth diseñados para deportistas, resistentes al sudor, con sonido potente y estable. Incluye estuche de carga.",
+    "code": "BsaaurcInlmbrs1",
+    "price": "150",
+    "stock": 30,
+    "status": true,
+    "category": "Auriculares",
+    "thumbnail": "https://ejemplo.com/auriculares-inalambricos-deportivos.jpg"
+  },
+  {
+    "id": "_cmrAccn4k1",
+    "title": "Cámara de acción GoPro Hero 9 Black",
+    "description": "Cámara resistente al agua hasta 10 metros, con grabación en 4K a 60fps, estabilización HyperSmooth 3.0 y pantalla táctil trasera.",
+    "code": "GprcmrAccn4k1",
+    "price": "450",
+    "stock": 20,
+    "status": true,
+    "category": "Cámaras de acción",
+    "thumbnail": "https://ejemplo.com/camara-accion-4k.jpg"
+  },
+  {
+    "id": "_mprsMult1",
+    "title": "Impresora multifunción Epson EcoTank L3150",
+    "description": "Impresora, escáner y copiadora con sistema de tanques de tinta recargables, conexión Wi-Fi, impresión a doble cara y capacidad de impresión desde dispositivos móviles.",
+    "code": "EpsmprsMult1",
+    "price": "300",
+    "stock": 25,
+    "status": true,
+    "category": "Impresoras",
+    "thumbnail": "https://ejemplo.com/impresora-multifuncion.jpg"
+  }
+]
