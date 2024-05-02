@@ -4,7 +4,7 @@ import __dirname from '../utils.js';
 
 const productsFilePath = path.join(__dirname, 'data', 'products.json')
 
-async function readProductsFromFile() {
+export async function readProductsFromFile() {
     try {
         const data = await fs.promises.readFile(productsFilePath, 'utf8')
         return JSON.parse(data)

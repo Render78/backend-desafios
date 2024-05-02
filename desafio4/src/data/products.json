@@ -8,7 +8,7 @@
     "stock": 15,
     "status": true,
     "category": "Laptops",
-    "thumbnail": "https://ejemplo.com/laptop-ultradelgada.jpg"
+    "thumbnail": "https://imgs.search.brave.com/aeqW7D9WWLkY1ndJ21XSAnMM6qkLNkD6PC_l-XE16aE/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMtbmEuc3NsLWlt/YWdlcy1hbWF6b24u/Y29tL2ltYWdlcy9J/LzgxS3loZmNvQjRM/LmpwZw"
   },
   {
     "id": "_aurcInlmbrs1",
@@ -19,7 +19,7 @@
     "stock": 30,
     "status": true,
     "category": "Auriculares",
-    "thumbnail": "https://ejemplo.com/auriculares-inalambricos-deportivos.jpg"
+    "thumbnail": "https://assets.bose.com/content/dam/Bose_DAM/Web/consumer_electronics/global/products/headphones/ssw_product_page/ssw_product_page_main_silo_1x1.psd/jcr:content/renditions/cq5dam.web.320.320.jpeg"
   },
   {
     "id": "_cmrAccn4k1",
@@ -30,7 +30,7 @@
     "stock": 20,
     "status": true,
     "category": "Cámaras de acción",
-    "thumbnail": "https://ejemplo.com/camara-accion-4k.jpg"
+    "thumbnail": "https://gopro.com.ar/wp-content/uploads/2021/01/4-3.png"
   },
   {
     "id": "_mprsMult1",
@@ -41,6 +41,6 @@
     "stock": 25,
     "status": true,
     "category": "Impresoras",
-    "thumbnail": "https://ejemplo.com/impresora-multifuncion.jpg"
+    "thumbnail": "https://lh3.googleusercontent.com/proxy/ppmJGj6gSyATJ2sKRQdrv-c2ZiY6DJ86kauP8ZlNtHkLRV4_74sqoA_-kV-VMkAfZ9Qh07Okptkh1BTxByYPMTiUrAa6INyAL6eeVtRsA8yoxCj7UhJrwiI"
   }
 ]
