@@ -15,4 +15,9 @@ router.get('/profile', isAuthenticated, (req, res) => {
     res.render('profile', { user: req.session.user });
 });
 
+router.get('/products', isAuthenticated, (req, res) => {
+    const { user } = req.session;
+
+    res.render('products', { user });
+})
 export default router;

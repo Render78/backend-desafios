@@ -16,20 +16,43 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    console.log(email, password)
     try {
-        const user = await User.findOne({ email });
-        console.log(user)
-        if (!user) return res.status(404).send('Usuario no encontrado');
+        let user;
+        if (email === 'adminCoder@coder.com' && password === 'adminCod3r123') {
+            // Si el usuario es el administrador, asignar el rol de administrador
+            user = {
+                role: req.session.user.role,
+                first_name: 'Coder',
+                last_name: 'House',
+                email: email,
+                age: req.session.user.age
+            };
+        } else {
+            // Si el usuario no es el administrador, buscar en la base de datos
+            user = await User.findOne({ email });
+            if (!user) return res.status(404).send('Usuario no encontrado');
+            // Aquí deberías verificar la contraseña, pero sin bcrypt, solo podemos comparar las cadenas directamente
+            if (user.password !== password) return res.status(401).send('Contraseña incorrecta');
+            // Si el usuario no es el administrador, asignar el rol de usuario
+            user.role = 'user';
+        }
+
+        // Guardar el usuario en la sesión
         req.session.user = {
             id: user._id,
             first_name: user.first_name,
             last_name: user.last_name,
             email: user.email,
             age: user.age,
+            role: user.role || 'user', // Asignar el rol predeterminado como 'user' si no se especifica
         };
-        console.log(req.session.user)
-        res.redirect('/profile');
+
+        // Redirigir a la página correspondiente según el rol del usuario
+        if (req.session.user.role === 'admin') {
+            res.redirect('/profile');
+        } else {
+            res.redirect('/products');
+        }
 
     } catch (err) {
         res.status(500).send('Error al iniciar sesión');

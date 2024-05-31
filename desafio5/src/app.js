@@ -14,7 +14,7 @@ app.engine('hbs', engine({
     defaultLayout: 'main',
 }));
 app.set('view engine', 'hbs');
-app.set('views', '../src/views');
+app.set('views', './src/views');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -23,8 +23,7 @@ app.use(session({
     secret: 'secretkey',
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: 'mongodb+srv://Julian:12345@cluster0.e9to8uh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0' }),
-    // cookie: { maxAge: 180 * 60 * 1000 },
+    store: MongoStore.create({ mongoUrl: 'mongodb+srv://Julian:12345@cluster0.e9to8uh.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0' })
 }));
 
 app.use('/api/sessions', sessionsRouter);
