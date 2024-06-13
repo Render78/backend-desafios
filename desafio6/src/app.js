@@ -6,6 +6,7 @@ import mongoose from './config/database.js';
 import MongoStore from 'connect-mongo';
 import sessionsRouter from './routes/api/sessions.js';
 import viewsRouter from './routes/views.js';
+import dotenv from 'dotenv'
 
 const app = express();
 
@@ -19,11 +20,13 @@ app.set('views', './src/views');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+dotenv.config();
+
 app.use(session({
     secret: 'secretkey',
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: 'mongodb+srv://Julian:12345@cluster0.e9to8uh.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0' })
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL })
 }));
 
 app.use('/api/sessions', sessionsRouter);
