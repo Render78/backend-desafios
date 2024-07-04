@@ -7,6 +7,7 @@ import usersRouter from './routes/users.router.js'
 import ordersRouter from './routes/orders.router.js'
 import businessRouter from './routes/business.router.js'
 import productsRouter from './routes/product.router.js'
+import cartsRouter from './routes/cart.router.js'
 
 const app = express()
 const PORT = 8080
@@ -23,6 +24,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/business', businessRouter)
 app.use('/api/orders', ordersRouter)
 app.use('/api/products', productsRouter)
+app.use('/api/carts', cartsRouter)
 
 
 app.listen(PORT, () => {
