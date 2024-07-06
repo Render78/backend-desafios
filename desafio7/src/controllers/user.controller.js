@@ -1,17 +1,20 @@
 import userModel from '../dao/models/user.model.js';
 import { createHash } from '../utils.js';
+import Cart from '../dao/classes/cart.dao.js'
+
+const cartService = new Cart()
 
 export const registerUser = async (req, res) => {
     const { first_name, last_name, email, age, password } = req.body;
 
-    try {
-        let existingUser = await userModel.findOne({ email });
+    try {        
+        const existingUser = await userModel.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ error: 'El correo ya está registrado' });
         }
-
+        
         const hashedPassword = createHash(password);
-
+        
         const newUser = new userModel({
             first_name,
             last_name,
@@ -19,10 +22,15 @@ export const registerUser = async (req, res) => {
             age,
             password: hashedPassword
         });
-
+        
         const savedUser = await newUser.save();
         console.log("Nuevo usuario registrado:", savedUser);
-
+        
+        const newCart = await cartService.createCart();
+        
+        savedUser.cart = newCart._id;
+        await savedUser.save();
+        
         res.status(201).json({ status: "success", message: "Usuario registrado exitosamente" });
     } catch (error) {
         console.error("Error al registrar usuario:", error);

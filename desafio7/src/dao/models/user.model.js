@@ -7,12 +7,12 @@ const userCollection = "Users";
 const userSchema = new mongoose.Schema({
     first_name: { type: String, required: true, max: 100 },
     last_name: { type: String, required: true, max: 100 },
-    email: { type: String, unique: true },
+    email: { type: String, unique: true, required: true },
     age: { type: Number, required: true, max: 100 },
     password: { type: String },
     cart: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'carts',
+        ref: 'Carts',
         default: null
     },
     role: { type: String, default: 'user' }
