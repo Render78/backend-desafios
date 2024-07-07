@@ -4,12 +4,14 @@ import {
     renderHome,
     renderLogin,
     renderRegister,
-    renderCurrent
+    renderCurrent,
+    renderProducts
 } from '../controllers/views.controller.js';
 
 const router = Router();
 
 router.get("/", renderHome);
+router.get('/products', renderProducts)
 router.get('/login', isNotAuthenticated, renderLogin);
 router.get('/register', isNotAuthenticated, renderRegister);
 router.get('/current', isAuthenticated, renderCurrent);

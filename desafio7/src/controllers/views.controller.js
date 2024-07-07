@@ -1,8 +1,24 @@
+import axios from 'axios'
+
 export const renderHome = async (req, res) => {
     try {
         res.render('home');
     } catch (error) {
-        console.error("No se pudo renderizar la vista", error);
+        console.log("No se pudo renderizar la vista", error);
+    }
+};
+
+export const renderProducts = async (req, res) => {
+    try {        
+        const response = await axios.get(`${req.protocol}://${req.get('host')}/api/products`);
+        const productsData = response.data;
+        
+        res.render('products', { 
+            products: productsData.products,
+            pagination: productsData.pagination
+        });
+    } catch (error) {
+        console.log("No se pudo renderizar la vista de productos", error);
     }
 };
 

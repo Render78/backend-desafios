@@ -21,11 +21,11 @@
         {{/each}}
     </div>
     <div class="mt-4">
-        {{#if prevLink}}
-        <a href="{{prevLink}}" class="btn btn-primary mb-4">Página anterior</a>
+        {{#if pagination.prevLink}}
+        <a href="{{pagination.prevLink}}" class="btn btn-primary mb-4">Página anterior</a>
         {{/if}}
-        {{#if nextLink}}
-        <a href="{{nextLink}}" class="btn btn-primary ml-2 mb-4">Página siguiente</a>
+        {{#if pagination.nextLink}}
+        <a href="{{pagination.nextLink}}" class="btn btn-primary ml-2 mb-4">Página siguiente</a>
         {{/if}}
     </div>
 </div>
