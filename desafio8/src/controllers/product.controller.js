@@ -1,4 +1,8 @@
 import ProductRepositoryImpl from '../repositories/product.repository.impl.js';
+import { generateProductErrorInfo } from '../services/info.js';
+import CustomError from "../services/CustomError.js";
+import EErrors from "../services/enum.js";
+
 const productRepository = new ProductRepositoryImpl();
 
 export const listProducts = async (req, res) => {
@@ -87,7 +91,15 @@ export const addProduct = async (req, res) => {
     const { title, description, category, price, thumbnail, code, stock, status } = req.body;
 
     if (!title || !description || !category || !price || !thumbnail || !code || !stock || !status) {
-      return res.status(400).json({ status: "error", error: "Faltan parámetros obligatorios" });
+
+      const error = CustomError.createError({
+        name: "Agregar nuevo producto",
+        cause: generateProductErrorInfo({ title, description, category, price, thumbnail, code, stock, status }),
+        message: "Error al querer agregar un nuevo producto",
+        code: EErrors.INVALID_TYPES_ERROR
+      })
+
+      return res.status(400).json({ status: "error", error });
     }
 
     const newProduct = await productRepository.create({ title, description, category, price, thumbnail, code, stock, status });

@@ -15,6 +15,7 @@ import sessionsRouter from './routes/api/sessions.router.js'
 import productsRouter from './routes/product.router.js'
 import cartsRouter from './routes/cart.router.js'
 import ticketRouter from './routes/ticket.router.js'
+import errorHandler from './middleware/errors.js'
 
 const app = express()
 const PORT = 8080
@@ -51,6 +52,7 @@ app.use('/api/sessions', sessionsRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.use('/api/tickets', ticketRouter)
+app.use(errorHandler)
 
 
 app.listen(PORT, () => {

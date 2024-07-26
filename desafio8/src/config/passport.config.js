@@ -6,6 +6,10 @@ import { createHash } from "../utils.js";
 import dotenv from 'dotenv';
 import UserRepositoryImpl from "../repositories/user.repository.impl.js";
 import CartRepositoryImpl from '../repositories/cart.repository.impl.js';
+import CustomError from "../services/CustomError.js";
+import EErrors from "../services/enum.js";
+import { generateUserErrorInfo } from "../services/info.js";
+
 dotenv.config();
 
 const userRepository = new UserRepositoryImpl();
@@ -44,6 +48,16 @@ const initializePassport = () => {
                     cart: newCart._id,
                     role
                 });
+
+                if (!first_name || !last_name || !email || !age || !password ) {
+                    CustomError.createError({
+                        name: "Registro de usuario",
+                        cause: generateUserErrorInfo({first_name, last_name, email, age, password}),
+                        message: "Error al intentar registrar un usuario",
+                        code: EErrors.INVALID_TYPES_ERROR
+                    })
+                    return;
+                }
 
                 let result = await newUser.save();
                 return done(null, result);
@@ -106,7 +120,7 @@ const initializePassport = () => {
                         email,
                         age: 20,
                         password: "",
-                        role: email.endsWith('@admin.com') ? 'admin' : 'user' // Asignar rol
+                        role: email.endsWith('@admin.com') ? 'admin' : 'user'
                     });
 
                     user = await newUser.save();
