@@ -9,6 +9,7 @@ import CartRepositoryImpl from '../repositories/cart.repository.impl.js';
 import CustomError from "../services/CustomError.js";
 import EErrors from "../services/enum.js";
 import { generateUserErrorInfo } from "../services/info.js";
+import logger from '../utils/logger.js'
 
 dotenv.config();
 
@@ -25,7 +26,7 @@ const initializePassport = () => {
             try {
                 let user = await userRepository.findUserByEmail(email);
                 if (user) {
-                    console.log("El usuario ya existe");
+                    logger.warning(`El usuario con el email ${email} ya existe.`)
                     return done(null, false);
                 }
 
@@ -37,7 +38,7 @@ const initializePassport = () => {
                 }
 
                 const newCart = await cartRepository.createCart();
-                console.log("Nuevo carrito creado:", newCart);
+                logger.info(`Nuevo carrito creado con el ID: ${newCart}`);
 
                 const newUser = new userModel({
                     first_name,
@@ -49,19 +50,23 @@ const initializePassport = () => {
                     role
                 });
 
-                if (!first_name || !last_name || !email || !age || !password ) {
+                if (!first_name || !last_name || !email || !age || !password) {
+                    const errorInfo = generateUserErrorInfo({ first_name, last_name, email, age, password });
                     CustomError.createError({
                         name: "Registro de usuario",
-                        cause: generateUserErrorInfo({first_name, last_name, email, age, password}),
+                        cause: errorInfo,
                         message: "Error al intentar registrar un usuario",
                         code: EErrors.INVALID_TYPES_ERROR
-                    })
-                    return;
+                    });
+                    logger.warning(`Error al registrar el usuario: ${errorInfo}`);
+                    return done(null, false);
                 }
 
                 let result = await newUser.save();
+                logger.info(`Usuario registrado exitosamente: ${email}`)
                 return done(null, result);
             } catch (error) {
+                logger.error(`Error al registrar el usuario: ${error.message}`)
                 return done(error);
             }
         }
@@ -73,21 +78,20 @@ const initializePassport = () => {
             try {
                 const user = await userModel.findOne({ email });
                 if (!user) {
-                    console.log("El usuario no existe");
+                    logger.warning(`El usuario con el email ${email} no existe.`);
                     return done(null, false);
                 }
-
-                console.log('Contraseña ingresada:', password);
-                console.log('Contraseña almacenada:', user.password);
 
                 const isMatch = await user.comparePassword(password);
-                console.log('¿Las contraseñas coinciden?', isMatch);
                 if (!isMatch) {
-                    console.log("Contraseña incorrecta");
+                    logger.warning(`Contraseña incorrecta para el usuario con el email ${email}.`);
                     return done(null, false);
                 }
+                
+                logger.info(`Usuario con el email ${email} ha iniciado sesión exitosamente.`);
                 return done(null, user);
             } catch (error) {
+                logger.error(`Error durante el proceso de login: ${error.message}`);
                 return done(error);
             }
         }
@@ -101,7 +105,7 @@ const initializePassport = () => {
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
-                console.log("Profile from GitHub:", profile);
+                logger.info(`Perfil recibido de GitHub: ${JSON.stringify(profile)}`);
 
                 const email = profile._json.email || `${profile.username}@github.com`;
                 let user = await userModel.findOne({ email });
@@ -109,10 +113,7 @@ const initializePassport = () => {
                 if (!user) {
                     const [first_name, last_name] = profile.displayName.split(' ');
 
-                    console.log("Creating new user with data:");
-                    console.log("First Name:", first_name);
-                    console.log("Last Name:", last_name);
-                    console.log("Email:", email);
+                    logger.info(`Creando nuevo usuario con los datos: First Name: ${first_name}, Last Name: ${last_name || 'N/A'}, Email: ${email}`);
 
                     const newUser = new userModel({
                         first_name,
@@ -124,14 +125,14 @@ const initializePassport = () => {
                     });
 
                     user = await newUser.save();
-                    console.log("New user created:", user);
+                    logger.info(`Nuevo usuario creado: ${JSON.stringify(user)}`);
                 } else {
-                    console.log("User found in database:", user);
+                    logger.info(`Usuario encontrado en la base de datos: ${JSON.stringify(user)}`);
                 }
 
                 return done(null, user);
             } catch (error) {
-                console.error("Error in GitHub passport strategy:", error);
+                logger.error(`Error en la estrategia de Passport con GitHub: ${error.message}`);
                 return done(error);
             }
         }

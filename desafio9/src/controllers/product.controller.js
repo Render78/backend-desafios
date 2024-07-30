@@ -81,7 +81,7 @@ export const getProductById = async (req, res) => {
     if (error.message === "Invalid ID") {
       return res.status(400).json({ status: "error", error: "ID inválido" });
     }
-    console.error("No se pudo obtener el producto por ID", error);
+    logger.error(`No se pudo obtener el producto por ID: ${error.message}`);
     res.status(500).json({ status: "error", error: "Error interno del servidor" });
   }
 };
@@ -105,7 +105,7 @@ export const addProduct = async (req, res) => {
     const newProduct = await productRepository.create({ title, description, category, price, thumbnail, code, stock, status });
     res.status(201).json(newProduct);
   } catch (error) {
-    console.error("Error al agregar el producto", error);
+    logger.error(`Error al agregar el producto: ${error.message}`);
     res.status(500).json({ status: "error", error: "Error interno del servidor" });
   }
 };
@@ -130,7 +130,7 @@ export const updateProduct = async (req, res) => {
     if (error.message === "Invalid ID") {
       return res.status(400).json({ status: "error", error: "ID inválido" });
     }
-    console.error("Error al actualizar el producto", error);
+    logger.error(`Error al actualizar el producto: ${error.message}`);
     res.status(500).json({ status: "error", error: "Error interno del servidor" });
   }
 };
@@ -150,7 +150,7 @@ export const deleteProduct = async (req, res) => {
     if (error.message === "Invalid ID") {
       return res.status(400).json({ status: "error", error: "ID inválido" });
     }
-    console.error("Error al eliminar el producto", error);
+    logger.error(`Error al eliminar el producto: ${error.message}`);
     res.status(500).json({ status: "error", error: "Error interno del servidor" });
   }
 };

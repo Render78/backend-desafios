@@ -1,4 +1,5 @@
 import TicketRepository from "../repositories/ticket.repository.js";
+import logger from "../utils/logger.js";
 
 const ticketRepository = new TicketRepository();
 
@@ -14,7 +15,7 @@ export const createTicket = async (req, res) => {
         const savedTicket = await ticketRepository.createTicket(newTicket);
         res.status(201).json({ status: "success", ticket: savedTicket });
     } catch (error) {
-        console.error("Error al crear ticket:", error);
+        logger.error(`Error al crear el ticket ${error.message}`);
         res.status(500).json({ error: 'Error al crear ticket' });
     }
 };
@@ -29,7 +30,7 @@ export const getTicketById = async (req, res) => {
         }
         res.status(200).json({ status: "success", ticket });
     } catch (error) {
-        console.error("Error al obtener ticket:", error);
+        logger.error(`Error al obtener el ticket ${error.message}`);
         res.status(500).json({ error: 'Error al obtener ticket' });
     }
 };
@@ -39,7 +40,7 @@ export const getAllTickets = async (req, res) => {
         const tickets = await ticketRepository.getAllTickets();
         res.status(200).json({ status: "success", tickets });
     } catch (error) {
-        console.error("Error al obtener tickets:", error);
+        logger.error(`Error al obtener los tickets ${error.message}`);
         res.status(500).json({ error: 'Error al obtener tickets' });
     }
 };
@@ -55,7 +56,7 @@ export const updateTicket = async (req, res) => {
         }
         res.status(200).json({ status: "success", ticket: updatedTicket });
     } catch (error) {
-        console.error("Error al actualizar ticket:", error);
+        logger.error(`Error al actualizar ticker ${error.message}`);
         res.status(500).json({ error: 'Error al actualizar ticket' });
     }
 };
@@ -70,7 +71,7 @@ export const deleteTicket = async (req, res) => {
         }
         res.status(200).json({ status: "success", message: "Ticket eliminado" });
     } catch (error) {
-        console.error("Error al eliminar ticket:", error);
+        logger.error(`Error al eliminar el ticket ${error.message}`);
         res.status(500).json({ error: 'Error al eliminar ticket' });
     }
 };

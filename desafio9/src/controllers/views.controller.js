@@ -5,7 +5,7 @@ export const renderHome = async (req, res) => {
     try {
         res.render('home');
     } catch (error) {
-        console.log("No se pudo renderizar la vista", error);
+        logger.error(`No se pudo renderizar la vista ${error.message}`);
     }
 };
 
@@ -15,8 +15,6 @@ export const renderProducts = async (req, res) => {
         const productsData = response.data;
 
         let user = req.session.user;
-        console.log(user);
-
 
         res.render('products', {
             products: productsData.products,
@@ -24,7 +22,7 @@ export const renderProducts = async (req, res) => {
             cart: user.cart
         });
     } catch (error) {
-        console.log("No se pudo renderizar la vista de productos", error);
+        logger.error(`No se pudo renderizar la vista de productos ${error.message}`);
     }
 };
 
@@ -32,7 +30,7 @@ export const renderAddProduct = async (req, res) => {
     try {
         res.render('addProduct');
     } catch (error) {
-        console.log("No se pudo renderizar la vista", error);
+        logger.error(`No se pudo renderizar la vista ${error.message}`);
     }
 }
 
@@ -40,7 +38,7 @@ export const renderUpdateProduct = async (req, res) => {
     try {
         res.render('updateProduct');
     } catch (error) {
-        console.log("No se pudo renderizar la vista", error);
+        logger.error(`No se pudo renderizar la vista ${error.message}`);
     }
 }
 
@@ -48,7 +46,7 @@ export const renderDeleteProduct = async (req, res) => {
     try {
         res.render('deleteProduct');
     } catch (error) {
-        console.log("No se pudo renderizar la vista", error);
+        logger.error(`No se pudo renderizar la vista ${error.message}`);
     }
 }
 
@@ -69,7 +67,7 @@ export const renderCurrent = async (req, res) => {
         const userDTO = new UserDTO(req.session.user);
         res.render('current', { user: userDTO });
     } catch (error) {
-        console.log("No se pudo renderizar la vista current", error);
+        logger.error(`No se pudo renderizar el current ${error.message}`);
         res.status(500).json({ error: 'Error al renderizar la vista current' });
     }
 };

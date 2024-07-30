@@ -1,6 +1,7 @@
 import CartRepositoryImpl from '../repositories/cart.repository.impl.js';
 import ProductRepositoryImpl from '../repositories/product.repository.impl.js';
 import TicketRepository from '../repositories/ticket.repository.js';
+import logger from '../utils/logger.js';
 
 const cartRepository = new CartRepositoryImpl();
 const productRepository = new ProductRepositoryImpl();
@@ -116,7 +117,7 @@ export const purchase = async (req, res) => {
       failedProducts
     });
   } catch (error) {
-    console.error(error);
+    logger.error(`Error en el proceso de compra: ${error.message}`);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 };
