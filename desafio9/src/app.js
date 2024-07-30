@@ -15,6 +15,7 @@ import sessionsRouter from './routes/api/sessions.router.js'
 import productsRouter from './routes/product.router.js'
 import cartsRouter from './routes/cart.router.js'
 import ticketRouter from './routes/ticket.router.js'
+import testRouter from './routes/test.router.js'
 import errorHandler from './middleware/errors.js'
 
 const app = express()
@@ -48,6 +49,7 @@ app.use(express.static(__dirname + '/public'))
 
 //Routes
 app.use('/', viewsRouter)
+app.use('/api/test', testRouter)
 app.use('/api/sessions', sessionsRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
