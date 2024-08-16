@@ -1,5 +1,6 @@
 import axios from 'axios'
 import UserDTO from '../dao/dtos/user.dto.js';
+import logger from '../utils/logger.js'
 
 export const renderHome = async (req, res) => {
     try {
