@@ -58,7 +58,7 @@ const swaggerOptions = {
             description: "Documentacion de API E-Commerce"
         },
     },
-    apis: [`src/docs/products/products.yaml`]
+    apis: [`src/docs/products/products.yaml`, `src/docs/carts/carts.yaml`]
 };
 
 const specs = swaggerJsdoc(swaggerOptions);
