@@ -92,22 +92,17 @@ describe("Testing de carrito", () => {
 
     it("El DAO debe agregar un producto a un carrito correctamente", async function () {
         try {
-            // Crea un carrito y un producto para los tests
             const cart = await this.cartsDao.createCart();
-            const productId = new mongoose.Types.ObjectId(); // Simula un ID de producto
+            const productId = new mongoose.Types.ObjectId();
 
-            // Agrega el producto al carrito
             let updatedCart = await this.cartsDao.addProductToCart(cart._id, productId);
 
-            // Verifica que el producto haya sido agregado al carrito
             assert.strictEqual(updatedCart.products.length, 1);
             assert.strictEqual(updatedCart.products[0].product.toString(), productId.toString());
             assert.strictEqual(updatedCart.products[0].quantity, 1);
 
-            // Vuelve a agregar el mismo producto al carrito
             updatedCart = await this.cartsDao.addProductToCart(cart._id, productId);
 
-            // Verifica que la cantidad del producto haya aumentado
             assert.strictEqual(updatedCart.products.length, 1);
             assert.strictEqual(updatedCart.products[0].quantity, 2);
 
