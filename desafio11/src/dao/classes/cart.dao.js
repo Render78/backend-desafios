@@ -30,7 +30,7 @@ export default class Cart {
             const cart = await cartModel.findById(cartId);
             if (!cart) throw new Error('Cart not found');
 
-            const existingProductIndex = cart.products.findIndex(item => item.product.toString() === productId);
+            const existingProductIndex = cart.products.findIndex(item => item.product.toString() === productId.toString());
             if (existingProductIndex !== -1) {
                 cart.products[existingProductIndex].quantity += 1;
             } else {
