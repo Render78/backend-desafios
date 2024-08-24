@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Product from '../src/dao/classes/product.dao.js';
+import productsModel from '../src/dao/models/product.model.js';
 import Cart from '../src/dao/classes/cart.dao.js';
 import Assert from 'assert';
 import dotenv from 'dotenv';
@@ -15,6 +16,10 @@ describe("Testing de productos", () => {
     before(function () {
         this.productsDao = new Product();
     })
+
+    beforeEach(async () => {
+        await productsModel.deleteMany({ code: 'EXCD' });
+    });
 
     it("Deberia retornar productos desde la DB", async function () {
         this.timeout(5000);
@@ -80,7 +85,7 @@ describe("Testing de carrito", () => {
 
     it("El DAO debe obtener un carrito por ID", async function () {
         try {
-            const cid = "669e669dc99d2bcb3324868f";
+            const cid = "66ca3a836d427f43877262f2";
             const cart = await this.cartsDao.getCartById(cid);
             assert.strictEqual(typeof cart, 'object');
             assert.strictEqual(cart._id.toString(), cid);
